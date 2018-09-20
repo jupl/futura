@@ -1,0 +1,21 @@
+{
+  "coverageDirectory": "<rootDir>/.coverage",
+  "coveragePathIgnorePatterns": [
+    "/node_modules/",
+    "<rootDir>/.next/",
+    "<rootDir>/.jest/"
+  ],
+  "globals": {
+    "ts-jest": {
+      "tsConfig": "<rootDir>/tsconfig.server.json"
+    }
+  },
+  "preset": "ts-jest",
+  "setupFiles": [
+    "<rootDir>/.jest/shims.ts"
+  ],
+  "setupTestFrameworkScriptFile": "<rootDir>/.jest/setup.ts",
+  "snapshotSerializers": [
+    "enzyme-to-json/serializer"
+  ]
+}

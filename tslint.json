@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "@jupl/tslint-config",
+    "@jupl/tslint-config/jsx"
+  ]
+}
