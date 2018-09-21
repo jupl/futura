@@ -5,9 +5,6 @@ import * as CommonGQL from '../common/graphql'
 /** Context available in resolvers */
 export type Context = CommonGQL.Context // & X.Context & Y.Context & ...
 
-/** GraphQL root value */
-export const rootValue = {}
-
 /**
  * Build context
  * @return GraphQL context
