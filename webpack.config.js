@@ -1,3 +1,4 @@
+// tslint:disable:no-implicit-dependencies no-object-mutation
 const {addPlugins, createConfiguration} = require('wcb')
 const {BannerPlugin} = require('webpack')
 
