@@ -2,7 +2,7 @@
   "name": "app",
   "version": "0.0.1",
   "private": true,
-  "main": "./index.js",
+  "bin": "./index.js",
   "scripts": {
     "analyze": "cross-env ANALYZE=true npm run build:next",
     "analyze:server": "cross-env ANALYZE=server npm run build:next",
@@ -15,11 +15,12 @@
     "lint": "tsc && npm run lint:file",
     "lint:file": "tslint --project tsconfig.json",
     "server": "ts-node-dev --ignore-watch .next --ignore-watch node_modules --ignore-watch /components/ --transpileOnly --project tsconfig.server.json index.ts",
-    "start": "micro",
+    "start": "node index.js",
     "test": "jest --config .jestrc.json",
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
+    "apollo-link": "^1.2.3",
     "apollo-link-schema": "^1.1.1",
     "apollo-server-micro": "^2.1.0",
     "graphql": "^14.0.2",

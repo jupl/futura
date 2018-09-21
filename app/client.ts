@@ -1,8 +1,10 @@
-// tslint:disable-next-line:no-implicit-dependencies
 import {ApolloLink} from 'apollo-link'
 import {NextContext} from 'next'
 import {withData} from 'next-apollo'
 import {ComponentType} from 'react'
+
+/** GraphQL URL */
+export const GRAPHQL_URL = '/graphql'
 
 /**
  * Create new Apollo client options
@@ -28,6 +30,6 @@ function createLink(_context: NextContext): ApolloLink {
   }
   else {
     const {createHttpLink} = require('apollo-link-http')
-    return createHttpLink({uri: '/graphql'})
+    return createHttpLink({uri: GRAPHQL_URL})
   }
 }
