@@ -32,16 +32,12 @@ export function createHandler(
   const nextHandler = app.getRequestHandler()
 
   // Build handler and wrap any additional handlers
-  let handler = router(
+  return router(
     options(GRAPHQL_URL, graphqlHandler),
     post(GRAPHQL_URL, graphqlHandler),
     get(GRAPHQL_URL, graphqlHandler),
     nextHandler,
   )
-  if(process.env.NODE_ENV !== 'production') {
-    handler = require('micro-dev/lib/log')(handler, '1mb')
-  }
-  return handler
 }
 
 // @ts-ignore
