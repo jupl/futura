@@ -3,6 +3,8 @@ import {NextContext} from 'next'
 import {withData} from 'next-apollo'
 import {ComponentType} from 'react'
 
+let wrapper: Function | undefined
+
 /** GraphQL URL */
 export const GRAPHQL_URL = '/graphql'
 
@@ -12,9 +14,12 @@ export const GRAPHQL_URL = '/graphql'
  * @return Client instance options
  */
 export function withApollo(component: ComponentType) {
-  return withData((context: NextContext) => ({
-    link: createLink(context),
-  }))(component)
+  if(wrapper === undefined) {
+    wrapper = withData((context: NextContext) => ({
+      link: createLink(context),
+    })) as Function
+  }
+  return wrapper(component)
 }
 
 function createLink(_context: NextContext): ApolloLink {
