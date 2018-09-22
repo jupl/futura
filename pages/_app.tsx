@@ -1,6 +1,5 @@
-import {NextContext} from 'next'
-import * as withRedux from 'next-redux-wrapper'
-import NextApp, {AppComponentProps, Container} from 'next/app'
+import withRedux from 'next-redux-wrapper'
+import NextApp, {AppProps, Container, NextAppContext} from 'next/app'
 import * as React from 'react'
 import {Provider} from 'react-redux'
 import {Store} from 'redux'
@@ -10,24 +9,17 @@ interface Props {
   store: Store<{}>
 }
 
-interface Context {
-  Component: React.ComponentType & {
-    getInitialProps?(context: NextContext): Promise<{}>
-  }
-  ctx: NextContext
-}
-
-type InitialProps = Pick<AppComponentProps, 'pageProps'>
-
+/** Next application component */
 class App extends NextApp<Props> {
   static async getInitialProps({ // tslint:disable-line:completed-docs
     Component,
     ctx,
-  }: Context): Promise<InitialProps> {
+    router,
+  }: NextAppContext): Promise<AppProps> {
     const pageProps = Component.getInitialProps !== undefined
       ? await Component.getInitialProps(ctx)
       : {}
-    return {pageProps}
+    return {Component, pageProps, router}
   }
 
   render() { // tslint:disable-line:completed-docs
@@ -43,4 +35,4 @@ class App extends NextApp<Props> {
 }
 
 // tslint:disable-next-line:no-default-export
-export default withRedux.default(createStore)(App)
+export default withRedux(createStore)(App)

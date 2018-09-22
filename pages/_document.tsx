@@ -16,7 +16,8 @@ const VIEWPORT = Object.entries({
 }).map(([key, value]) => `${kebabCase(key)}=${value}`).join()
 
 /** Component representing document structure */
-class Document extends NextDocument {
+// tslint:disable-next-line:no-default-export
+export default class Document extends NextDocument {
   /**
    * Set up styled-components server-side
    * @return Component properties
@@ -49,6 +50,3 @@ class Document extends NextDocument {
     )
   }
 }
-
-// tslint:disable-next-line:no-default-export
-export default Document
