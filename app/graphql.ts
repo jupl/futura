@@ -3,9 +3,9 @@ import {makeExecutableSchema} from 'graphql-tools'
 import {merge} from 'lodash'
 import * as CommonGQL from '../common/graphql'
 
-let context: ReturnType<typeof createContext> | undefined
-let rootValue: ReturnType<typeof createRootValue> | undefined
-let schema: ReturnType<typeof createSchema> | undefined
+let context: Context | undefined
+let rootValue: {} | undefined
+let schema: GraphQLSchema | undefined
 
 /** Context available in resolvers */
 export type Context = CommonGQL.Context // & X.Context & Y.Context & ...
@@ -14,7 +14,7 @@ export type Context = CommonGQL.Context // & X.Context & Y.Context & ...
  * Build context
  * @return GraphQL context
  */
-export function createContext(): Context {
+export function createContext() {
   if(context === undefined) {
     context = {}
   }
@@ -25,7 +25,7 @@ export function createContext(): Context {
  * Build root value
  * @return Root value
  */
-export function createRootValue(): {} {
+export function createRootValue() {
   if(rootValue === undefined) {
     rootValue = {}
   }
@@ -36,7 +36,7 @@ export function createRootValue(): {} {
  * Build schema
  * @return GraphQL schema
  */
-export function createSchema(): GraphQLSchema {
+export function createSchema() {
   if(schema === undefined) {
     schema = makeExecutableSchema<Context>({
       resolvers: merge(
