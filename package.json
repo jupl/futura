@@ -73,6 +73,7 @@
     "lodash": "^4.17.11",
     "normalize.css": "^8.0.0",
     "raf": "^3.4.0",
+    "react-apollo": "^2.1.11",
     "ts-jest": "^23.1.4",
     "ts-node-dev": "^1.0.0-pre.30",
     "tslint": "^5.11.0",
