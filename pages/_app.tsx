@@ -1,10 +1,9 @@
-import withRedux from 'next-redux-wrapper'
 import NextApp, {AppProps, Container, NextAppContext} from 'next/app'
 import 'normalize.css'
 import * as React from 'react'
 import {Provider} from 'react-redux'
 import {Store} from 'redux'
-import {createStore} from '../app/store'
+import {withRedux} from '../app/wrappers'
 
 interface Props {
   store: Store<{}>
@@ -36,4 +35,4 @@ class App extends NextApp<Props> {
 }
 
 // tslint:disable-next-line:no-default-export
-export default withRedux(createStore)(App)
+export default withRedux(App)

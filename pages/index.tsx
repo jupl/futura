@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import {withApollo} from '../app/client'
+import {withApollo} from '../app/wrappers'
 
 // Container component
 const Container = styled.div`
