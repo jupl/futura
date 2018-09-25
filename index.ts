@@ -1,6 +1,8 @@
+import {ApolloServer} from 'apollo-server-micro'
 import micro from 'micro'
 import * as next from 'next'
-import {createApollo, createHandler} from './app/handler'
+import {createConfig} from './app/graphql'
+import {createHandler} from './app/handler'
 
 const DEFAULT_PORT = 3000
 
@@ -12,7 +14,7 @@ async function startServer() {
   port = !isNaN(port) ? port : DEFAULT_PORT
 
   // Construct instances
-  const apollo = createApollo()
+  const apollo = new ApolloServer(createConfig())
   const app = next({
     dev: process.env.NODE_ENV !== 'production',
     dir: __dirname,
@@ -20,7 +22,7 @@ async function startServer() {
   await app.prepare()
 
   // Start up server
-  const server = micro(createHandler(app, apollo))
+  const server = micro(createHandler(app, apollo.createHandler()))
 
   // Uncomment to add subscription support
   // apollo.installSubscriptionHandlers(server)

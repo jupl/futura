@@ -1,5 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import {withApollo} from '../app/client'
 
 // Container component
 const Container = styled.div`
@@ -19,7 +20,9 @@ const Container = styled.div`
  * Render home page
  * @return home page
  */
-// tslint:disable-next-line:no-default-export
-export default function HomePage() {
+function HomePage() {
   return <Container>Hello, Next.js</Container>
 }
+
+// tslint:disable-next-line:no-default-export
+export default withApollo(HomePage)

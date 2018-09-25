@@ -1,34 +1,19 @@
-import {ApolloServer} from 'apollo-server-micro'
 import {RequestHandler} from 'micro'
 import {AugmentedRequestHandler, get, options, post, router} from 'microrouter'
 import {Server} from 'next'
-import {GRAPHQL_URL} from './client'
-import * as GraphQL from './graphql'
-
-/**
- * Create Apollo server instance
- * @return Apollo server instance
- */
-export function createApollo() {
-  return new ApolloServer({
-    context: GraphQL.createContext(),
-    rootValue: GraphQL.createRootValue(),
-    schema: GraphQL.createSchema(),
-  })
-}
+import {GRAPHQL_URL} from './graphql'
 
 /**
  * Create request Next based request handler
  * @param app Next server instance
- * @param apollo Apollo server instance
+ * @param graphqlHandler GraphQL handler
  * @return Request/response handler
  */
 export function createHandler(
   app: Server,
-  apollo: ApolloServer,
+  graphqlHandler: AugmentedRequestHandler,
 ): RequestHandler {
   // Set up route handlers
-  const graphqlHandler = apollo.createHandler()
   const nextHandler = app.getRequestHandler()
 
   // Build handler and wrap any additional handlers
@@ -40,8 +25,16 @@ export function createHandler(
   )
 }
 
-// @ts-ignore
-function paramHandler(app: Server, url: string): AugmentedRequestHandler {
+/**
+ * Create handler that accepts parameters from URL or query
+ * @param app Next app instance
+ * @param url Microrouter based URL
+ * @return Handler
+ */
+export function paramHandler(
+  app: Server,
+  url: string,
+): AugmentedRequestHandler {
   return async(req, res) => app.render(req, res, url, {
     ...req.query,
     ...req.params,
