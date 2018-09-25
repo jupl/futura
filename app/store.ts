@@ -14,8 +14,6 @@ if(process.env.IS_SERVER !== 'true' && module.hot) {
 
 /**
  * Create new store instance
- * @param initialState Initial state to hydrate store with
- * @param options Options provided from next-redux-wrapper
  * @return Store instance
  */
 export function createStore() {
