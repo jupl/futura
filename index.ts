@@ -1,7 +1,7 @@
 import {ApolloServer} from 'apollo-server-koa'
 import * as Koa from 'koa'
 import * as next from 'next'
-import {createConfig} from './app/graphql'
+import {GRAPHQL_URL, createConfig} from './app/graphql'
 import {createRouter} from './app/router'
 
 const DEFAULT_PORT = 3000
@@ -21,13 +21,18 @@ async function startServer() {
   })
   const server = new Koa()
 
-  // Integrate Apollo (uncomment to add subscription support)
-  apollo.applyMiddleware({app: server})
-  // apollo.installSubscriptionHandlers(server)
-
+  // Integrate Next and Apollo
+  apollo.applyMiddleware({app: server, path: GRAPHQL_URL})
   server.use(createRouter(app))
+  await app.prepare()
 
   // Start up server
-  await app.prepare()
-  server.listen(port, () => console.log(`Server started on port ${port}`))
+  server.listen(port, () => {
+    console.log(`Server started on port ${port}`)
+  })
+
+  // Alternatively to use subscriptions
+  // apollo.installSubscriptionHandlers(server.listen(port, () => {
+  //   console.log(`Server started on port ${port}`)
+  // }))
 }
