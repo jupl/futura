@@ -1,8 +1,8 @@
-import {ApolloServer} from 'apollo-server-micro'
-import micro from 'micro'
+import {ApolloServer} from 'apollo-server-koa'
+import * as Koa from 'koa'
 import * as next from 'next'
 import {createConfig} from './app/graphql'
-import {createHandler} from './app/handler'
+import {createRouter} from './app/router'
 
 const DEFAULT_PORT = 3000
 
@@ -19,13 +19,15 @@ async function startServer() {
     dev: process.env.NODE_ENV !== 'production',
     dir: __dirname,
   })
+  const server = new Koa()
   await app.prepare()
 
-  // Start up server
-  const server = micro(createHandler(app, apollo.createHandler()))
-
-  // Uncomment to add subscription support
+  // Integrate Apollo (uncomment to add subscription support)
+  apollo.applyMiddleware({app: server})
   // apollo.installSubscriptionHandlers(server)
 
+  server.use(createRouter(app))
+
+  // Start up server
   server.listen(port, () => console.log(`Server started on port ${port}`))
 }
