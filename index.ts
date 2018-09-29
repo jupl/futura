@@ -20,7 +20,6 @@ async function startServer() {
     dir: __dirname,
   })
   const server = new Koa()
-  await app.prepare()
 
   // Integrate Apollo (uncomment to add subscription support)
   apollo.applyMiddleware({app: server})
@@ -29,5 +28,6 @@ async function startServer() {
   server.use(createRouter(app))
 
   // Start up server
+  await app.prepare()
   server.listen(port, () => console.log(`Server started on port ${port}`))
 }
