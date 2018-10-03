@@ -1,4 +1,5 @@
-import NextApp, {AppProps, Container, NextAppContext} from 'next/app'
+import NextApp, {Container, NextAppContext} from 'next/app'
+import Head from 'next/head'
 import 'normalize.css'
 import * as React from 'react'
 import {Provider} from 'react-redux'
@@ -11,25 +12,27 @@ interface Props {
 
 /** Next application component */
 class App extends NextApp<Props> {
-  static async getInitialProps({ // tslint:disable-line:completed-docs
-    Component,
-    ctx,
-    router,
-  }: NextAppContext): Promise<AppProps> {
+  // tslint:disable-next-line:completed-docs
+  static async getInitialProps({Component, ctx}: NextAppContext) {
     const pageProps = Component.getInitialProps !== undefined
       ? await Component.getInitialProps(ctx)
       : {}
-    return {Component, pageProps, router}
+    return {pageProps}
   }
 
   render() { // tslint:disable-line:completed-docs
     const {Component, pageProps, store} = this.props
     return (
-      <Container>
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider>
-      </Container>
+      <>
+        <Head>
+          <title>Application</title>
+        </Head>
+        <Container>
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
+        </Container>
+      </>
     )
   }
 }

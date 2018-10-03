@@ -1,0 +1,10 @@
+{
+  "execMap": {
+    "ts": "ts-node --project tsconfig.server.json"
+  },
+  "ignore": [
+    ".next/**/*",
+    "*/components/**/*",
+    "**/*.test.*"
+  ]
+}

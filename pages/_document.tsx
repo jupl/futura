@@ -15,9 +15,13 @@ const VIEWPORT = Object.entries({
   width: 'device-width',
 }).map(([key, value]) => `${kebabCase(key)}=${value}`).join()
 
+interface Props {
+  styleTags: React.ReactElement<{}>[]
+}
+
 /** Component representing document structure */
 // tslint:disable-next-line:no-default-export
-export default class Document extends NextDocument {
+export default class Document extends NextDocument<Props> {
   /**
    * Set up styled-components server-side
    * @return Component properties
@@ -38,7 +42,6 @@ export default class Document extends NextDocument {
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
           <meta name="viewport" content={VIEWPORT} />
-          <title>Application</title>
           <link rel="stylesheet" href="/_next/static/style.css" />
           {this.props.styleTags}
         </Head>

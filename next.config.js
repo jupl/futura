@@ -1,4 +1,3 @@
-// @ts-check
 // tslint:disable:no-object-mutation
 // tslint:disable-next-line:no-implicit-dependencies
 const {DefinePlugin} = require('webpack')
