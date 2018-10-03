@@ -4,6 +4,7 @@
   },
   "ignore": [
     ".next/**/*",
+    "pages/**/*",
     "*/components/**/*",
     "**/*.test.*"
   ]
