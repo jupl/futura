@@ -5,7 +5,24 @@ import {Server} from 'next'
 // tslint:disable:no-object-mutation
 
 /**
- * Create Next based request handler
+ * Create middleware to handle errors
+ * @param app Next server instance
+ * @return Koa middleware
+ */
+export function createErrorHandler(app: Server): Middleware {
+  return async(ctx, nxt) => {
+    try {
+      await nxt()
+    }
+    catch(error) {
+      await app.renderError(error, ctx.req, ctx.res, ctx.url, ctx.query)
+      ctx.respond = false
+    }
+  }
+}
+
+/**
+ * Create router middleware
  * @param app Next server instance
  * @return Koa middleware
  */

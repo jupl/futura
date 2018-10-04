@@ -2,7 +2,7 @@ import {ApolloServer} from 'apollo-server-koa'
 import * as Koa from 'koa'
 import * as next from 'next'
 import {GRAPHQL_URL, createConfig} from './app/graphql'
-import {createRouter} from './app/router'
+import {createErrorHandler, createRouter} from './app/middleware'
 
 const DEFAULT_PORT = 3000
 
@@ -19,9 +19,10 @@ async function startServer() {
     dev: process.env.NODE_ENV !== 'production',
     dir: __dirname,
   })
-  const server = new Koa()
 
-  // Integrate Next and Apollo
+  // Set up server
+  const server = new Koa()
+  server.use(createErrorHandler(app))
   apollo.applyMiddleware({app: server, path: GRAPHQL_URL})
   server.use(createRouter(app))
   await app.prepare()
