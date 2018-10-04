@@ -1,11 +1,12 @@
 {
+  "ext": "ts,tsx",
   "execMap": {
-    "ts": "ts-node --project tsconfig.server.json"
+    "ts": "ts-node --transpileOnly --project tsconfig.server.json"
   },
   "ignore": [
-    ".next/**/*",
-    "pages/**/*",
-    "*/components/**/*",
+    "pages",
+    "*/components",
+    "**/test.*",
     "**/*.test.*"
   ]
 }
