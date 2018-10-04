@@ -16,7 +16,7 @@ const VIEWPORT = Object.entries({
 }).map(([key, value]) => `${kebabCase(key)}=${value}`).join()
 
 interface Props {
-  styleTags: React.ReactElement<{}>[]
+  styleTags: JSX.Element[]
 }
 
 /** Component representing document structure */
