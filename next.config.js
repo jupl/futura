@@ -15,6 +15,7 @@ module.exports = {
       reportFilename: '../../.bundles/server.html',
     },
   },
+  poweredByHeader: false,
   /**
    * Additional tweaks to Webpack config
    * @param {object} config Webpack configuration

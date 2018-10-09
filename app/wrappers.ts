@@ -1,6 +1,8 @@
+import {NextContext} from 'next'
 import {withData} from 'next-apollo'
 import withReduxBase from 'next-redux-wrapper'
 import {ComponentType} from 'react'
+import {getContext} from '../common/middleware'
 import {createLink} from './graphql'
 import {createStore} from './store'
 
@@ -12,10 +14,12 @@ let reduxWrapper: ReturnType<typeof withReduxBase> | undefined
  * @param component Component to wrap
  * @return Wrapped component
  */
-export function withApollo(component: ComponentType) {
+export function withApollo<P>(component: ComponentType<P>) {
   if(apolloWrapper === undefined) {
-    apolloWrapper = withData(() => ({
-      link: createLink(),
+    apolloWrapper = withData((ctx: NextContext) => ({
+      link: process.env.IS_SERVER === 'true'
+        ? createLink(getContext(ctx))
+        : createLink(),
     })) as Function
   }
   return apolloWrapper(component)
@@ -26,7 +30,7 @@ export function withApollo(component: ComponentType) {
  * @param component Component to wrap
  * @return Wrapped component
  */
-export function withRedux(component: ComponentType) {
+export function withRedux<P>(component: ComponentType<P>) {
   if(reduxWrapper === undefined) {
     reduxWrapper = withReduxBase(createStore)
   }

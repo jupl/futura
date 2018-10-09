@@ -1,15 +1,19 @@
+import {OK} from 'http-status'
 import {Middleware} from 'koa'
 import * as Router from 'koa-router'
 import {Server} from 'next'
+import {writeContext} from '../common/middleware'
 
 /**
- * Create middleware to handle errors
+ * Create middleware to prepare Next-related items
  * @param next Next server instance
  * @return Koa middleware
  */
-export function createErrorHandler(next: Server): Middleware {
+export function createNextWrapperHandler(next: Server): Middleware {
   return async(ctx, nxt) => {
     try {
+      ctx.res.statusCode = OK
+      writeContext(ctx)
       await nxt()
     }
     catch(error) {

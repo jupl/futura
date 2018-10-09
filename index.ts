@@ -1,8 +1,9 @@
 import {ApolloServer} from 'apollo-server-koa'
 import * as Koa from 'koa'
-import * as createNext from 'next'
+import * as Helmet from 'koa-helmet'
+import * as Next from 'next'
 import {GRAPHQL_URL, createConfig} from './app/graphql'
-import {createErrorHandler, createRouter} from './app/middleware'
+import {createNextWrapperHandler, createRouter} from './app/middleware'
 
 const DEFAULT_PORT = 3000
 
@@ -15,14 +16,15 @@ async function startServer() {
 
   // Construct instances
   const apollo = new ApolloServer(createConfig())
-  const next = createNext({
+  const next = Next({
     dev: process.env.NODE_ENV !== 'production',
     dir: __dirname,
   })
 
   // Set up server
   const app = new Koa()
-  app.use(createErrorHandler(next))
+  app.use(Helmet())
+  app.use(createNextWrapperHandler(next))
   apollo.applyMiddleware({app, path: GRAPHQL_URL})
   app.use(createRouter(next))
   await next.prepare()
