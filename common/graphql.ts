@@ -1,7 +1,7 @@
 import {IResolvers} from 'graphql-tools'
 
 /** Schema definition */
-export const typeDefs = `
+export const typeDef = `
   schema {
     mutation: Mutation
     query: Query
@@ -19,6 +19,14 @@ export const typeDefs = `
 /** Context for resolvers */
 // tslint:disable-next-line:no-empty-interface
 export interface Context {}
+
+/**
+ * Schema definition
+ * @return Composite schema definition
+ */
+export function typeDefs() {
+  return [typeDef]
+}
 
 /**
  * Resolvers generator
