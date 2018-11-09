@@ -1,6 +1,7 @@
 // tslint:disable:no-object-mutation
 // tslint:disable-next-line:no-implicit-dependencies
 const {DefinePlugin} = require('webpack')
+const path = require('path')
 
 module.exports = {
   analyzeBrowser: process.env.ANALYZE !== 'server',
@@ -26,6 +27,7 @@ module.exports = {
     config.plugins.push(new DefinePlugin({
       'process.env.IS_SERVER': JSON.stringify(`${isServer}`),
     }))
+    config.output.devtoolModuleFilenameTemplate = fixPath
     return config
   },
 }
@@ -59,4 +61,10 @@ function tryRequire(module) {
     return undefined
   }
   return require(module)
+}
+
+function fixPath({absoluteResourcePath}) {
+  const protocol = path.isAbsolute(absoluteResourcePath) ? 'file' : 'webpack'
+  const resource = absoluteResourcePath.split(path.sep).join('/')
+  return `${protocol}://${resource.startsWith('/') ? '' : '/'}${resource}`
 }

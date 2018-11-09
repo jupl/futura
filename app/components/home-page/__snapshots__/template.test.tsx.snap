@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AppHomePage> template 1`] = `
+<styled.div>
+  Hello, Next.js from 
+  server
+</styled.div>
+`;
+
+exports[`<AppHomePage> template 2`] = `
+<styled.div>
+  Hello, Next.js from 
+  client
+</styled.div>
+`;
