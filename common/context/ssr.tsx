@@ -1,22 +1,23 @@
 import * as React from 'react'
-import {Omit} from '../util'
 
 /** Props injected into component */
-export interface Props {
+export interface Context {
   ssr: boolean
 }
 
-/** Context value */
-export type Value = boolean
+/** Initial context value */
+export const INITIAL_CONTEXT: Context = {
+  ssr: true,
+}
 
 /** Context */
-export const Context = React.createContext<Value>(true)
+export const Context = React.createContext(INITIAL_CONTEXT)
 export const {Consumer} = Context
 
 /** Provider implementation */
 export class Provider extends React.Component {
   /** Initial state */
-  state = {ssr: true}
+  state = INITIAL_CONTEXT
 
   componentDidMount() {
     this.setState({ssr: false})
@@ -24,23 +25,9 @@ export class Provider extends React.Component {
 
   render() { // tslint:disable-line:completed-docs
     return (
-      <Context.Provider value={this.state.ssr}>
+      <Context.Provider value={this.state}>
         {this.props.children}
       </Context.Provider>
     )
   }
 }
-
-type Wrapped<T> = React.ComponentType<Omit<T, Props>>
-type Wrappee<T> = React.ComponentType<T & Props>
-
-/**
- * Wrap component to inject context data
- * @param Comp React component
- * @return Component with injection
- */
-export const wrap = <T extends {}>(Comp: Wrappee<T>): Wrapped<T> => props => (
-  <Context.Consumer>
-    {ssr => <Comp {...props} ssr={ssr} />}
-  </Context.Consumer>
-)
