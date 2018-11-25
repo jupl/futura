@@ -6,7 +6,8 @@ interface Context {
 }
 
 describe('Contexts', () => {
-  const files: string[] = find(resolve(__dirname, '../*/context/*.ts{,x}'))
+  const path = '../*/context/*{!.test}.ts{,x}'
+  const files: string[] = find(resolve(__dirname, path))
   const contextTable = files.map(file => require(file) as Context)
 
   it('should have unique names for properties', () => {

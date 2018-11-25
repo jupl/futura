@@ -1,20 +1,15 @@
 {
   "coverageDirectory": "<rootDir>/.coverage",
-  "coveragePathIgnorePatterns": [
-    "/node_modules/",
-    "<rootDir>/.next/",
-    "<rootDir>/.jest/"
-  ],
   "globals": {
     "ts-jest": {
-      "tsConfig": "<rootDir>/tsconfig.server.json"
+      "babelConfig": {
+        "plugins": ["dynamic-import-node"]
+      },
+      "tsConfig": "<rootDir>/tsconfig.node.json"
     }
   },
   "preset": "ts-jest",
-  "setupFiles": [
-    "<rootDir>/.jest/shims.ts"
-  ],
-  "setupTestFrameworkScriptFile": "<rootDir>/.jest/setup.ts",
+  "setupTestFrameworkScriptFile": "<rootDir>/jest/setup.ts",
   "snapshotSerializers": [
     "enzyme-to-json/serializer"
   ]

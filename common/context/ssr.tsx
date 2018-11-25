@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, {Component, createContext} from 'react'
 
 /** Props injected into component */
 export interface Context {
@@ -11,11 +11,10 @@ export const INITIAL_CONTEXT: Context = {
 }
 
 /** Context */
-export const Context = React.createContext(INITIAL_CONTEXT)
-export const {Consumer} = Context
+export const Context = createContext(INITIAL_CONTEXT)
 
 /** Provider implementation */
-export class Provider extends React.Component {
+export class Provider extends Component {
   /** Initial state */
   state = INITIAL_CONTEXT
 

@@ -1,12 +1,13 @@
 // tslint:disable:no-object-mutation
 // tslint:disable-next-line:no-implicit-dependencies
 const {DefinePlugin} = require('webpack')
+const {existsSync} = require('fs')
+const {memoize} = require('lodash')
 const path = require('path')
 
 module.exports = {
   analyzeBrowser: process.env.ANALYZE !== 'server',
-  analyzeServer: process.env.ANALYZE !== 'client',
-  bundleAnalyzerConfig: {
+  analyzeServer: process.env.ANALYZE !== 'client', bundleAnalyzerConfig: {
     browser: {
       analyzerMode: 'static',
       reportFilename: '../.bundles/client.html',
@@ -27,7 +28,7 @@ module.exports = {
     config.plugins.push(new DefinePlugin({
       'process.env.IS_SERVER': JSON.stringify(`${isServer}`),
     }))
-    config.output.devtoolModuleFilenameTemplate = fixPath
+    config.output.devtoolModuleFilenameTemplate = createFixPath()
     return config
   },
 }
@@ -63,8 +64,18 @@ function tryRequire(module) {
   return require(module)
 }
 
-function fixPath({absoluteResourcePath}) {
-  const protocol = path.isAbsolute(absoluteResourcePath) ? 'file' : 'webpack'
-  const resource = absoluteResourcePath.split(path.sep).join('/')
-  return `${protocol}://${resource.startsWith('/') ? '' : '/'}${resource}`
+function createFixPath() {
+  const exists = memoize(existsSync)
+  return i => {
+    let resource = i.absoluteResourcePath
+    if(!path.isAbsolute(resource)) {
+      const maybe = path.resolve(resource)
+      if(exists(maybe)) {
+        resource = maybe
+      }
+    }
+    resource = resource.split(path.sep).join('/')
+    const protocol = path.isAbsolute(resource) ? 'file' : 'webpack'
+    return `${protocol}://${resource.startsWith('/') ? '' : '/'}${resource}`
+  }
 }

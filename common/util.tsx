@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, {ComponentType} from 'react'
 
 /** Omit properties */
 export type Omit<T, K> = Pick<T, Exclude<keyof T, keyof K>>
@@ -9,10 +9,8 @@ export type Omit<T, K> = Pick<T, Exclude<keyof T, keyof K>>
  * @return Component wrapper
  */
 export const withContext = <C extends {}>(Context: React.Context<C>) =>
-  <P extends {}>(
-    Component: React.ComponentType<P & C>,
-  ): React.ComponentType<Omit<P, C>> =>
-    props => (
+  <P extends {}>(Component: ComponentType<P & C>) =>
+    (props: Omit<P, C>) => (
       <Context.Consumer>
         {context => <Component {...context} {...props} />}
       </Context.Consumer>

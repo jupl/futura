@@ -1,7 +1,7 @@
 import NextApp, {Container, NextAppContext} from 'next/app'
 import Head from 'next/head'
 import 'normalize.css'
-import * as React from 'react'
+import React from 'react'
 import * as SSR from '../common/context/ssr'
 
 /** Next application component */

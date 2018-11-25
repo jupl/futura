@@ -4,6 +4,6 @@
     "@jupl/tslint-config/jsx"
   ],
   "rules": {
-    "no-object-mutation": [true, {"ignore-prefix": "ctx"}]
+    "no-require-imports": true
   }
 }

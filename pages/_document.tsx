@@ -5,7 +5,7 @@ import NextDocument, {
   NextDocumentContext,
   NextScript,
 } from 'next/document'
-import * as React from 'react'
+import React from 'react'
 import {ServerStyleSheet} from 'styled-components'
 
 const VIEWPORT = Object.entries({

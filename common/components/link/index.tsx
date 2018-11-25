@@ -1,12 +1,12 @@
 import NextLink, {LinkState} from 'next/link'
-import * as React from 'react'
+import React, {ReactNode} from 'react'
 
 /** Inherited properties */
 export type Parent = Pick<LinkState, Exclude<keyof LinkState, 'children'>>
 
 /** Component properties */
 export interface Props {
-  children?: React.ReactNode
+  children?: ReactNode
   className?: string
 }
 
