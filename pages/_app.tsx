@@ -2,7 +2,7 @@ import NextApp, {Container, NextAppContext} from 'next/app'
 import Head from 'next/head'
 import 'normalize.css'
 import React from 'react'
-import * as SSR from '../common/context/ssr'
+import * as SSR from '~/common/context/ssr'
 
 /** Next application component */
 // tslint:disable-next-line:no-default-export

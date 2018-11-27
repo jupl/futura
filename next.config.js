@@ -29,6 +29,7 @@ module.exports = {
       'process.env.IS_SERVER': JSON.stringify(`${isServer}`),
     }))
     config.output.devtoolModuleFilenameTemplate = createFixPath()
+    config.resolve.alias['~'] = path.resolve('src')
     return config
   },
 }
