@@ -32,7 +32,9 @@ module.exports = {
     }))
     config.output.devtoolModuleFilenameTemplate = createFixPath()
     config.resolve.plugins = config.resolve.plugins || []
-    config.resolve.plugins.push(new TSConfigPathsPlugin())
+    config.resolve.plugins.push(new TSConfigPathsPlugin({
+      extensions: config.resolve.extensions,
+    }))
     return config
   },
 }
