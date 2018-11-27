@@ -4,6 +4,7 @@ const {DefinePlugin} = require('webpack')
 const {existsSync} = require('fs')
 const {memoize} = require('lodash')
 const path = require('path')
+const TSConfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 module.exports = {
   analyzeBrowser: process.env.ANALYZE !== 'server',
@@ -29,7 +30,8 @@ module.exports = {
       'process.env.IS_SERVER': JSON.stringify(`${isServer}`),
     }))
     config.output.devtoolModuleFilenameTemplate = createFixPath()
-    config.resolve.alias['~'] = path.resolve('src')
+    config.resolve.plugins = config.resolve.plugins || []
+    config.resolve.plugins.push(new TSConfigPathsPlugin())
     return config
   },
 }
