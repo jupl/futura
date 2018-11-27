@@ -8,7 +8,8 @@ const TSConfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 module.exports = {
   analyzeBrowser: process.env.ANALYZE !== 'server',
-  analyzeServer: process.env.ANALYZE !== 'client', bundleAnalyzerConfig: {
+  analyzeServer: process.env.ANALYZE !== 'client',
+  bundleAnalyzerConfig: {
     browser: {
       analyzerMode: 'static',
       reportFilename: '../.bundles/client.html',
