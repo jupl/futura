@@ -1,3 +1,4 @@
+// tslint:disable:file-name-casing
 import {kebabCase} from 'lodash'
 import NextDocument, {
   Head,

@@ -1,3 +1,4 @@
+// tslint:disable:file-name-casing
 import NextApp, {Container, NextAppContext} from 'next/app'
 import Head from 'next/head'
 import 'normalize.css'

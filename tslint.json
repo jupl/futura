@@ -4,7 +4,6 @@
     "@jupl/tslint-config/jsx"
   ],
   "rules": {
-    "no-require-imports": true,
     "no-implicit-dependencies": [true, "dev", ["~"]]
   }
 }

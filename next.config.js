@@ -1,4 +1,4 @@
-// tslint:disable:no-object-mutation
+// tslint:disable:no-object-mutation no-require-imports
 // tslint:disable-next-line:no-implicit-dependencies
 const {DefinePlugin} = require('webpack')
 const {existsSync} = require('fs')
