@@ -2,12 +2,12 @@ import {ServerRegisterPluginObject as Plugin} from 'hapi'
 import Next, {ServerOptions} from 'next'
 
 /**
- * Next.js plugin
- * @param options Next.js server options
+ * Create Next.js plugin
+ * @param opts Next.js server options
  * @return Hapi plugin
  */
-export const plugin = (options?: ServerOptions): Plugin<ServerOptions> => ({
-  options,
+export const createPlugin = (opts?: ServerOptions): Plugin<ServerOptions> => ({
+  options: opts,
   plugin: {
     name: 'next',
     register: async(server, config) => {

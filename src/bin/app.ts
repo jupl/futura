@@ -13,12 +13,12 @@ if(isNaN(port)) {
 (async() => { // tslint:disable-line:no-floating-promises
   const server = new Server({port, routes: {security: production}})
   await server.register([
-    Apollo.plugin({
+    Apollo.createPlugin({
       playground: !production,
       resolvers: [Common.Resolver],
       subscriptions: false,
     }),
-    Next.plugin({dev: !production}),
+    Next.createPlugin({dev: !production}),
   ])
   await server.start()
   console.log('Server running at:', server.info.uri)

@@ -8,11 +8,11 @@ interface Config extends BaseConfig {
 }
 
 /**
- * Apollo plugin
+ * Create Apollo plugin
  * @param options Apollo server options
  * @return Hapi plugin
  */
-export const plugin = (options: Config): Plugin<Config> => ({
+export const createPlugin = (options: Config): Plugin<Config> => ({
   options,
   plugin: {
     name: 'apollo',
