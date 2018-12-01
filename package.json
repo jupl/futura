@@ -15,7 +15,7 @@
     "test:update": "npm run test -- -u",
     "test:watch": "npm run test -- --watch",
     "server": "npm run server:dev",
-    "server:dev": "cross-env IS_SERVER=true NODE_ENV=development node --inspect -r reflect-metadata -r esm -r ts-node/register/type-check -r tsconfig-paths/register src/bin/app.ts",
+    "server:dev": "cross-env ESM_DISABLE_CACHE=true IS_SERVER=true NODE_ENV=development node --inspect -r reflect-metadata -r esm -r ts-node/register/type-check -r tsconfig-paths/register src/bin/app.ts",
     "server:prod": "npm run build:prod && npm run start",
     "server:story": "start-storybook -p 9001",
     "build:prod": "next build"

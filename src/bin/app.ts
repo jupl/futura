@@ -1,6 +1,7 @@
 import {Server} from 'hapi'
-import * as apollo from '~/common/plugins/apollo'
-import * as next from '~/common/plugins/next'
+import * as Common from '~/common/graphql/resolver'
+import * as Apollo from '~/common/plugins/apollo'
+import * as Next from '~/common/plugins/next'
 
 // Gather configuration data
 const production = process.env.NODE_ENV === 'production'
@@ -12,12 +13,12 @@ if(isNaN(port)) {
 (async() => { // tslint:disable-line:no-floating-promises
   const server = new Server({port, routes: {security: production}})
   await server.register([
-    apollo.plugin({
+    Apollo.plugin({
       playground: !production,
-      resolvers: [],
+      resolvers: [Common.Resolver],
       subscriptions: false,
     }),
-    next.plugin({dev: !production}),
+    Next.plugin({dev: !production}),
   ])
   await server.start()
   console.log('Server running at:', server.info.uri)
