@@ -12,7 +12,11 @@ if(isNaN(port)) {
 (async() => { // tslint:disable-line:no-floating-promises
   const server = new Server({port, routes: {security: production}})
   await server.register([
-    apollo.plugin({subscriptions: false}),
+    apollo.plugin({
+      playground: !production,
+      resolvers: [],
+      subscriptions: false,
+    }),
     next.plugin({dev: !production}),
   ])
   await server.start()

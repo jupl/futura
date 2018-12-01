@@ -1,5 +1,11 @@
-import {ApolloServer, Config} from 'apollo-server-hapi'
+import {ApolloServer, Config as ApolloConfig} from 'apollo-server-hapi'
 import {ServerRegisterPluginObject as Plugin} from 'hapi'
+import {BuildSchemaOptions, buildSchema} from 'type-graphql'
+
+type BaseConfig = Pick<ApolloConfig, Exclude<keyof ApolloConfig, 'resolvers'>>
+interface Config extends BaseConfig {
+  resolvers: BuildSchemaOptions['resolvers']
+}
 
 /**
  * Apollo plugin
@@ -10,8 +16,9 @@ export const plugin = (options: Config): Plugin<Config> => ({
   options,
   plugin: {
     name: 'apollo',
-    register: async(server, config) => {
-      const apollo = new ApolloServer(config)
+    register: async(server, {resolvers, ...config}) => {
+      const schema = await buildSchema({resolvers})
+      const apollo = new ApolloServer({...config, schema})
       await apollo.applyMiddleware({app: server})
       if(config.subscriptions !== false) {
         apollo.installSubscriptionHandlers(server.listener)
