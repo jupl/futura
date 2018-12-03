@@ -9,7 +9,7 @@ import Next, {ServerOptions} from 'next'
 export const createPlugin = (opts?: ServerOptions): Plugin<ServerOptions> => ({
   options: opts,
   plugin: {
-    name: 'next',
+    name: 'common-next',
     register: async(server, config) => {
       const next = Next(config)
       const handler = next.getRequestHandler()

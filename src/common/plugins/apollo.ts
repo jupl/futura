@@ -15,7 +15,7 @@ interface Config extends BaseConfig {
 export const createPlugin = (options: Config): Plugin<Config> => ({
   options,
   plugin: {
-    name: 'apollo',
+    name: 'common-apollo',
     register: async(server, {resolvers, ...config}) => {
       const schema = await buildSchema({resolvers})
       const apollo = new ApolloServer({...config, schema})
