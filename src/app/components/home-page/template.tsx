@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-/** Component properties */
-export interface Props {
+interface Props {
   ssr: boolean
 }
 

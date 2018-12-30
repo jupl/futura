@@ -3,6 +3,11 @@
     "@jupl/tslint-config",
     "@jupl/tslint-config/jsx"
   ],
+  "linterOptions": {
+    "exclude": [
+      "**/*.json"
+    ]
+  },
   "rules": {
     "no-implicit-dependencies": [true, "dev", ["~"]]
   }
