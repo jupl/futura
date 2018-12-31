@@ -2,7 +2,10 @@
   "name": "app",
   "version": "0.0.1",
   "private": true,
+  "bin": "dist/bin/app.js",
   "scripts": {
+    "package": "npm run build:prod && npm pack && npm run clean",
+    "clean": "trash dist/bin dist/next",
     "analyze": "cross-env ANALYZE=true npm run build:next",
     "analyze:server": "cross-env ANALYZE=server npm run build:next",
     "analyze:client": "cross-env ANALYZE=client npm run build:next",
@@ -16,7 +19,10 @@
     "server": "npm run server:dev",
     "server:dev": "cross-env NODE_ENV=development ESM_DISABLE_CACHE=true IS_SERVER=true node --inspect -r esm -r dotenv/config -r tsconfig-paths/register -r ts-node/register/type-check src/bin/app.ts",
     "server:prod": "next build && cross-env NODE_ENV=production ESM_DISABLE_CACH=true node -r esm -r dotenv/config -r tsconfig-paths/register -r ts-node/register/transpile-only src/bin/app",
-    "server:story": "start-storybook -p 9001"
+    "server:story": "start-storybook -p 9001",
+    "build:base": "npm run clean && next build && cross-env TS_NODE_PROJECT=tsconfig.base.json webpack",
+    "build:dev": "cross-env NODE_ENV=development npm run build:base",
+    "build:prod": "cross-env NODE_ENV=production npm run build:base"
   },
   "bundledDependencies": [
     "dotenv",
@@ -76,6 +82,7 @@
     "tslint": "^5.11.0",
     "typescript": "^3.2.2",
     "typescript-tslint-plugin": "^0.2.1",
-    "wcb": "^0.15.2"
+    "wcb": "^0.15.2",
+    "webpack-cli": "^3.1.2"
   }
 }

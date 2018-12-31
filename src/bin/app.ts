@@ -1,4 +1,5 @@
 import {Server} from 'hapi'
+import {join, relative} from 'path'
 import * as Next from '~/common/plugins/next'
 
 // Gather configuration data
@@ -11,7 +12,12 @@ if(isNaN(port)) {
 (async() => { // tslint:disable-line:no-floating-promises
   const server = new Server({port, routes: {security: production}})
   await server.register([
-    Next.createPlugin({dev: !production}),
+    Next.createPlugin({
+      conf: process.env.WEBPACK_BUILD !== 'true' ? undefined : {
+        distDir: relative(process.cwd(), join(__dirname, '../../dist/next')),
+      },
+      dev: !production,
+    }),
   ])
   await server.start()
   server.log([], `Server running at ${server.info.uri}`)

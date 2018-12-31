@@ -5,7 +5,6 @@ import {BannerPlugin} from 'webpack'
 /** Generated webpack configuration */
 export const configuration = addToEntries(addPlugins(createConfiguration({
   destination: 'dist/bin',
-  environment: 'production',
   paths: true,
   source: 'src/bin',
   target: 'node',
