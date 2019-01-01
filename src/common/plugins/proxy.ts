@@ -14,7 +14,12 @@ export const createPlugin = (): Plugin<{}> => ({
       // Map routes
       server.route({
         handler: {
-          proxy: {passThrough: true, uri: 'http://localhost:3001/{p}'},
+          proxy: {
+            mapUri: async({raw: {req: {url}}}) => ({
+              uri: `http://localhost:3001${url}`,
+            }),
+            passThrough: true,
+          },
         },
         method: 'GET',
         path: '/{p*}',
