@@ -1,4 +1,4 @@
-import {Server} from 'hapi'
+import {Server, ServerRegisterPluginObject} from 'hapi'
 import {ServerOptions as NextOptions} from 'next'
 import {resolve} from 'path'
 import * as Next from '~/common/plugins/next'
@@ -22,9 +22,25 @@ if(process.env.WEBPACK_BUILD === 'true') {
 
 (async() => { // tslint:disable-line:no-floating-promises
   const server = new Server({port, routes: {security: production}})
-  await server.register([
-    Next.createPlugin({...nextOptions, dev: !production}),
-  ])
+  let plugins: ServerRegisterPluginObject<{}>[] = []
+  if(process.env.WEBPACK_BUILD === 'true' || process.env.API_ONLY !== 'true') {
+    plugins = [
+      ...plugins,
+      Next.createPlugin({...nextOptions, dev: !production}),
+    ]
+  }
+  else {
+    plugins = [
+      ...plugins,
+      await proxyPlugin(),
+    ]
+  }
+  await server.register(plugins)
   await server.start()
   server.log([], `Server running at ${server.info.uri}`)
 })()
+
+async function proxyPlugin() {
+  const Proxy = await import('~/common/plugins/proxy')
+  return Proxy.createPlugin()
+}
