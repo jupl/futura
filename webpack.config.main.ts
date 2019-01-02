@@ -14,4 +14,4 @@ export const configuration = addToEntries(addPlugins(createConfiguration({
     entryOnly: true,
     raw: true,
   }),
-]), ['reflect-metadata', 'dotenv/config'])
+]), ['isomorphic-fetch', 'reflect-metadata', 'dotenv/config'])

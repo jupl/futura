@@ -14,12 +14,12 @@ import * as SSR from '~/common/context/ssr'
 import {createClient} from '~/common/graphql/client'
 
 interface Props extends AppProps, DefaultAppIProps {
-  apollo: NormalizedCacheObject | ApolloClient<NormalizedCacheObject>
+  apollo: NormalizedCacheObject | ApolloClient<{}>
 }
 
 /** Next application component */
 export default class App extends NextApp<Props> {
-  private readonly apollo: ApolloClient<NormalizedCacheObject>
+  private readonly apollo: ApolloClient<{}>
 
   // tslint:disable-next-line:completed-docs
   static async getInitialProps({Component, ctx, router}: NextAppContext) {
@@ -61,9 +61,7 @@ export default class App extends NextApp<Props> {
 
   constructor(props: Props) {
     super(props)
-    this.apollo = props.apollo instanceof ApolloClient
-      ? props.apollo
-      : createClient(props.apollo)
+    this.apollo = createClient(props.apollo)
   }
 
   render() { // tslint:disable-line:completed-docs

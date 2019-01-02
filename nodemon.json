@@ -1,7 +1,7 @@
 {
   "ext": "ts",
   "execMap": {
-    "ts": "node --inspect -r esm -r reflect-metadata -r dotenv/config -r tsconfig-paths/register -r ts-node/register/type-check"
+    "ts": "node --inspect -r esm -r isomorphic-fetch -r reflect-metadata -r dotenv/config -r tsconfig-paths/register -r ts-node/register/type-check"
   },
   "ignore": [
     "**/components/**",
