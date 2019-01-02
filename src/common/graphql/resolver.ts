@@ -7,8 +7,8 @@ export class Resolver {
    * Sample response
    * @return Version
    */
-  @TQL.Query()
-  version(): string {
+  @TQL.Query(_returns => String)
+  version() {
     return '0.0.1'
   }
 }

@@ -38,6 +38,8 @@ module.exports = {
     config.resolve.plugins.push(new TSConfigPathsPlugin({
       extensions: config.resolve.extensions,
     }))
+    // Mock for TypeGraphQL
+    config.node = {...config.node, fs: 'empty'}
     return config
   },
 }

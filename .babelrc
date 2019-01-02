@@ -4,6 +4,7 @@
     "@zeit/next-typescript/babel"
   ],
   "plugins": [
+    ["@babel/plugin-proposal-decorators", {"legacy": true}],
     ["babel-plugin-styled-components", {"ssr": true}],
     "babel-plugin-lodash"
   ]
