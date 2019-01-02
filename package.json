@@ -2,10 +2,10 @@
   "name": "app",
   "version": "0.0.1",
   "private": true,
-  "bin": "dist/bin/app.js",
+  "bin": ".dist/bin/app.js",
   "scripts": {
     "package": "npm run build:prod && npm pack && npm run clean",
-    "clean": "trash dist/bin dist/next",
+    "clean": "trash .dist/bin .dist/next",
     "analyze": "cross-env ANALYZE=true npm run build:next",
     "analyze:server": "cross-env ANALYZE=server npm run build:next",
     "analyze:client": "cross-env ANALYZE=client npm run build:next",
@@ -28,20 +28,28 @@
   },
   "bundledDependencies": [
     "dotenv",
+    "good",
+    "good-console",
+    "good-squeeze",
     "hapi",
     "lodash",
     "next",
     "react",
     "react-dom",
+    "rotating-file-stream",
     "styled-components"
   ],
   "dependencies": {
     "dotenv": "^6.2.0",
+    "good": "^8.1.1",
+    "good-console": "^7.1.0",
+    "good-squeeze": "^5.1.0",
     "hapi": "^17.8.1",
     "lodash": "^4.17.11",
     "next": "^7.0.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "rotating-file-stream": "^1.3.9",
     "styled-components": "^4.1.3"
   },
   "devDependencies": {

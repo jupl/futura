@@ -1,6 +1,7 @@
 import {Server, ServerRegisterPluginObject} from 'hapi'
 import {ServerOptions as NextOptions} from 'next'
 import {resolve} from 'path'
+import * as Log from '~/common/plugins/log'
 import * as Next from '~/common/plugins/next'
 
 // Gather configuration data
@@ -15,14 +16,16 @@ let nextOptions: NextOptions = {}
 if(process.env.WEBPACK_BUILD === 'true') {
   nextOptions = {
     ...nextOptions,
-    conf: {distDir: 'dist/next'},
+    conf: {distDir: '.dist/next'},
     dir: resolve(__dirname, '../..'),
   }
 }
 
 (async() => { // tslint:disable-line:no-floating-promises
   const server = new Server({port, routes: {security: production}})
-  let plugins: ServerRegisterPluginObject<{}>[] = []
+  let plugins: ServerRegisterPluginObject<{}>[] = [
+    Log.createPlugin(),
+  ]
   if(process.env.WEBPACK_BUILD === 'true' || process.env.API_ONLY !== 'true') {
     plugins = [
       ...plugins,
