@@ -19,7 +19,7 @@ module.exports = {
       reportFilename: '../../.bundles/server.html',
     },
   },
-  distDir: '.dist/next',
+  distDir: 'dist/next',
   poweredByHeader: false,
   /**
    * Additional tweaks to Webpack config

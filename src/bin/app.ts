@@ -16,7 +16,7 @@ let nextOptions: NextOptions = {}
 if(process.env.WEBPACK_BUILD === 'true') {
   nextOptions = {
     ...nextOptions,
-    conf: {distDir: '.dist/next'},
+    conf: {distDir: 'dist/next'},
     dir: resolve(__dirname, '../..'),
   }
 }
