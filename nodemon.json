@@ -1,0 +1,15 @@
+{
+  "ext": "ts",
+  "execMap": {
+    "ts": "node --inspect -r esm -r reflect-metadata -r dotenv/config -r tsconfig-paths/register -r ts-node/register/type-check"
+  },
+  "ignore": [
+    "**/components/**",
+    "**/test.*",
+    "**/*.test.*",
+    "pages/**"
+  ],
+  "watch": [
+    "src/**/*.ts"
+  ]
+}
