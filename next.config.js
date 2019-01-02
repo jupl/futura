@@ -27,9 +27,11 @@ module.exports = {
    * @param {object} options Next options
    * @return {object} Modified Webpack configuration
    */
-  webpack(config, {isServer}) {
+  webpack(config, {buildId, isServer}) {
+    const isBuild = buildId !== 'development'
     config.plugins.push(new DefinePlugin({
       'process.env.IS_SERVER': JSON.stringify(`${isServer}`),
+      'process.env.WEBPACK_BUILD': JSON.stringify(`${isBuild}`),
     }))
     config.output.devtoolModuleFilenameTemplate = createFixPath()
     config.resolve.plugins = config.resolve.plugins || []
