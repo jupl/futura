@@ -1,19 +1,69 @@
-// tslint:disable:file-name-casing
-import NextApp, {Container, NextAppContext} from 'next/app'
+// tslint:disable:file-name-casing no-default-export
+import {ApolloClient, NormalizedCacheObject} from 'apollo-boost'
+import NextApp, {
+  AppProps,
+  Container,
+  DefaultAppIProps,
+  NextAppContext,
+} from 'next/app'
 import Head from 'next/head'
 import 'normalize.css'
 import React from 'react'
+import {ApolloProvider, getDataFromTree} from 'react-apollo'
 import * as SSR from '~/common/context/ssr'
+import {createClient} from '~/common/graphql/client'
+
+interface Props extends AppProps, DefaultAppIProps {
+  apollo: NormalizedCacheObject | ApolloClient<NormalizedCacheObject>
+}
 
 /** Next application component */
-// tslint:disable-next-line:no-default-export
-export default class App extends NextApp {
+export default class App extends NextApp<Props> {
+  private readonly apollo: ApolloClient<NormalizedCacheObject>
+
   // tslint:disable-next-line:completed-docs
-  static async getInitialProps({Component, ctx}: NextAppContext) {
+  static async getInitialProps({Component, ctx, router}: NextAppContext) {
     const pageProps = Component.getInitialProps !== undefined
       ? await Component.getInitialProps(ctx)
       : {}
-    return {pageProps}
+
+    // Construct Apollo cache
+    let apollo
+    if(process.env.IS_SERVER === 'true') {
+      const [{SchemaLink}, {buildSchema}, {resolvers}] = await Promise.all([
+        import('apollo-link-schema'),
+        import('type-graphql'),
+        import('~/app/graphql'),
+      ])
+      const schema = await buildSchema({resolvers})
+      apollo = createClient(new SchemaLink({schema}))
+      try {
+        await getDataFromTree((
+          <App
+            Component={Component}
+            apollo={apollo}
+            pageProps={pageProps}
+            router={router}
+          />
+        ))
+      }
+      catch(e) {
+        console.error('Error while running getDataFromTree', e)
+      }
+      Head.rewind()
+    }
+
+    return {
+      pageProps,
+      apollo: apollo ? apollo.cache.extract() : {},
+    }
+  }
+
+  constructor(props: Props) {
+    super(props)
+    this.apollo = props.apollo instanceof ApolloClient
+      ? props.apollo
+      : createClient(props.apollo)
   }
 
   render() { // tslint:disable-line:completed-docs
@@ -24,9 +74,11 @@ export default class App extends NextApp {
           <title>Application</title>
         </Head>
         <Container>
-          <SSR.Provider>
-            <Component {...pageProps} />
-          </SSR.Provider>
+          <ApolloProvider client={this.apollo}>
+            <SSR.Provider>
+              <Component {...pageProps} />
+            </SSR.Provider>
+          </ApolloProvider>
         </Container>
       </>
     )

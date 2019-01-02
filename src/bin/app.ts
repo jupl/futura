@@ -1,7 +1,7 @@
 import {Server, ServerRegisterPluginObject} from 'hapi'
 import {ServerOptions as NextOptions} from 'next'
 import {resolve} from 'path'
-import * as Common from '~/common/graphql/resolver'
+import {resolvers} from '~/app/graphql'
 import * as Apollo from '~/common/plugins/apollo'
 import * as Log from '~/common/plugins/log'
 import * as Next from '~/common/plugins/next'
@@ -29,8 +29,8 @@ if(process.env.WEBPACK_BUILD === 'true') {
   let plugins: ServerRegisterPluginObject<any>[] = [
     Log.createPlugin(),
     Apollo.createPlugin({
+      resolvers,
       playground: !production,
-      resolvers: [Common.Resolver],
       subscriptions: false,
     }),
   ]
