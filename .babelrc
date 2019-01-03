@@ -6,6 +6,7 @@
   "plugins": [
     ["@babel/plugin-proposal-decorators", {"legacy": true}],
     ["babel-plugin-styled-components", {"ssr": true}],
+    "babel-plugin-graphql-tag",
     "babel-plugin-lodash"
   ]
 }
